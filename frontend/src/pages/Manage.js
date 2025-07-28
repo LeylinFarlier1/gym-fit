@@ -1,17 +1,23 @@
 import React from 'react';
 import './Manage.css';
 import MemberForm from '../components/MemberForm';
-import ExpenseForm from '../components/ExpenseForm'; // Importar el formulario de gastos
+import ExpenseForm from '../components/ExpenseForm';
+import MembershipPlanForm from '../components/MembershipPlanForm'; // Import the new form
 
 const Manage = () => {
   const handleMemberAdded = () => {
     console.log('Nuevo miembro añadido exitosamente!');
-    // Logic for success after adding member
+    // Logic for success after adding member, e.g., refetch members list in App.js
   };
 
   const handleExpenseAdded = () => {
     console.log('Nuevo gasto registrado exitosamente!');
     // Logic for success after adding expense
+  };
+
+  const handleMembershipPlanAdded = () => {
+    console.log('Nuevo plan de membresía creado exitosamente!');
+    // Logic for success after adding plan, e.g., refetch plans list in App.js
   };
 
   return (
@@ -28,11 +34,11 @@ const Manage = () => {
         </div>
         <div className="action-card">
           <h3>Registrar Gasto</h3>
-          <ExpenseForm onSuccess={handleExpenseAdded} /> {/* Integrar el formulario de gastos */}
+          <ExpenseForm onSuccess={handleExpenseAdded} />
         </div>
         <div className="action-card">
           <h3>Crear Plan de Membresía</h3>
-          <p>Formulario para crear un nuevo tipo de membresía próximamente...</p>
+          <MembershipPlanForm onSuccess={handleMembershipPlanAdded} /> {/* Integrate the new form */}
         </div>
       </div>
     </main>
