@@ -1,0 +1,26 @@
+# Etapa 1: Usar una imagen de Node para construir la app
+FROM node:18-alpine as builder
+
+WORKDIR /app
+
+# Copiar solo los archivos de dependencias e instalar
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm ci
+
+# Copiar el resto del código fuente
+COPY . .
+
+# Etapa 2: Usar una imagen limpia para ejecutar
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copiar las dependencias instaladas y el código fuente desde la etapa anterior
+COPY --from=builder /app ./
+
+# Exponer el puerto
+EXPOSE 3000
+
+# Comando para iniciar el servidor de desarrollo
+CMD ["npm", "start"]

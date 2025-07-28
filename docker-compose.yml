@@ -1,0 +1,110 @@
+# Definición de todos los servicios de la aplicación
+services:
+
+  # Servicio de Base de Datos PostgreSQL
+  db:
+    image: postgres:13-alpine
+    container_name: gymfit_db_container
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=gymfit_db
+      - POSTGRES_USER=gymadmin
+      - POSTGRES_PASSWORD=gympassword
+    ports:
+      - "5432:5432"
+    networks:
+      - gymfit-net
+
+  # Servicio de Cache y Message Broker Redis
+  cache:
+    image: redis:6-alpine
+    container_name: gymfit_cache_container
+    ports:
+      - "6379:6379"
+    networks:
+      - gymfit-net
+
+  # Servicio de Backend Django
+  backend:
+    build:
+      context: ./backend
+    container_name: gymfit_backend_container
+    command: python manage.py runserver 0.0.0.0:8000
+    #command: tail -f /dev/null 
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings.local # Asegúrate que la ruta a tus settings sea correcta
+      - POSTGRES_DB=gymfit_db
+      - POSTGRES_USER=gymadmin
+      - POSTGRES_PASSWORD=gympassword
+      - DB_HOST=db
+      - DB_PORT=5432
+      - CELERY_BROKER_URL=redis://cache:6379/0
+      - CELERY_RESULT_BACKEND=redis://cache:6379/0
+    depends_on:
+      - db
+      - cache
+    networks:
+      - gymfit-net
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: gymfit_frontend_container
+    volumes:
+      - ./frontend:/app  # <-- SOLO ESTE VOLUMEN
+    ports:
+      - "3000:3000"
+    networks:
+      - gymfit-net
+
+  # Servicio de Worker Celery para tareas asíncronas
+  celeryworker:
+    build:
+      context: ./backend
+    container_name: gymfit_celeryworker_container
+    command: celery -A core worker -l info # Reemplaza 'core' por el nombre de tu app de config de Django
+    volumes:
+      - ./backend:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings.local
+      - DATABASE_URL=postgres://gymadmin:gympassword@db:5432/gymfit_db
+      - CELERY_BROKER_URL=redis://cache:6379/0
+      - CELERY_RESULT_BACKEND=redis://cache:6379/0
+    depends_on:
+      - backend
+      - cache
+    networks:
+      - gymfit-net
+
+  # Servicio de Scheduler Celery Beat para tareas programadas
+  celerybeat:
+    build:
+      context: ./backend
+    container_name: gymfit_celerybeat_container
+    command: celery -A core beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - ./backend:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings.local
+      - DATABASE_URL=postgres://gymadmin:gympassword@db:5432/gymfit_db
+      - CELERY_BROKER_URL=redis://cache:6379/0
+      - CELERY_RESULT_BACKEND=redis://cache:6379/0
+    depends_on:
+      - backend
+      - cache
+    networks:
+      - gymfit-net
+
+# Definición de la red personalizada para la comunicación entre servicios
+networks:
+  gymfit-net:
+    driver: bridge
+
+# Definición de volúmenes para la persistencia de datos (como la base de datos)
+volumes:
+  postgres_data:

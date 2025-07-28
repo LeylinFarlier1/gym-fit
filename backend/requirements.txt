@@ -1,0 +1,22 @@
+# --- Core de Django ---
+Django==4.2
+djangorestframework==3.14.0
+dj-rest-auth==2.2.6
+djangorestframework-simplejwt==5.2.2
+drf-spectacular==0.26.4
+django-cors-headers==4.0.0
+
+# --- Conexión a Base de Datos ---
+psycopg2-binary==2.9.5
+dj-database-url==2.0.0
+
+# --- Tareas Asíncronas con Celery ---
+celery==5.3.1
+redis==4.5.5
+django-celery-beat==2.5.0
+
+# --- Servidor WSGI ---
+gunicorn==20.1.0
+
+# --- Utilidades ---
+python-decouple==3.6
