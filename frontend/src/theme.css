@@ -1,0 +1,14 @@
+/* frontend/src/theme.css */
+:root {
+  --brand-primary: #2E4A62;
+  --brand-secondary: #528272;
+  --action-primary: #FF7A59;
+  --ui-background: #F5F7FA;
+  --ui-surface: #FFFFFF;
+  --text-primary: #1A202C;
+  --text-secondary: #718096;
+  --ui-border: #E2E8F0;
+  --feedback-success: #28A745;
+  --feedback-warning: #F3BA60;
+  --feedback-error: #DC3545;
+}
