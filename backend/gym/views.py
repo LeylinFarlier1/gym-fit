@@ -1,47 +1,73 @@
 from rest_framework import viewsets
-from .models import Asistencia, Clases, Clientes, Equipos, HorariosClases, HorariosPersonal, Membresias, Pagos, Personal, Productos, Ventas
-from .serializers import AsistenciaSerializer, ClasesSerializer, ClientesSerializer, EquiposSerializer, HorariosClasesSerializer, HorariosPersonalSerializer, MembresiasSerializer, PagosSerializer, PersonalSerializer, ProductosSerializer, VentasSerializer
+from .models import (
+    PlanesMembresia, Miembros, SuscripcionesMiembro, RolesPersonal, Personal,
+    HorariosPersonal, Clases, ClasesProgramadas, Asistencia, Pagos,
+    CategoriasGasto, Gastos, MetasMiembro, LogsEntrenamiento, FeedbackMiembro
+)
+from .serializers import (
+    PlanesMembresiaSerializer, MiembrosSerializer, SuscripcionesMiembroSerializer,
+    RolesPersonalSerializer, PersonalSerializer, HorariosPersonalSerializer,
+    ClasesSerializer, ClasesProgramadasSerializer, AsistenciaSerializer,
+    PagosSerializer, CategoriasGastoSerializer, GastosSerializer,
+    MetasMiembroSerializer, LogsEntrenamientoSerializer, FeedbackMiembroSerializer
+)
 
-class AsistenciaViewSet(viewsets.ModelViewSet):
-    queryset = Asistencia.objects.all()
-    serializer_class = AsistenciaSerializer
+class PlanesMembresiaViewSet(viewsets.ModelViewSet):
+    queryset = PlanesMembresia.objects.all()
+    serializer_class = PlanesMembresiaSerializer
 
-class ClasesViewSet(viewsets.ModelViewSet):
-    queryset = Clases.objects.all()
-    serializer_class = ClasesSerializer
+class MiembrosViewSet(viewsets.ModelViewSet):
+    queryset = Miembros.objects.all()
+    serializer_class = MiembrosSerializer
 
-class ClientesViewSet(viewsets.ModelViewSet):
-    queryset = Clientes.objects.all()
-    serializer_class = ClientesSerializer
+class SuscripcionesMiembroViewSet(viewsets.ModelViewSet):
+    queryset = SuscripcionesMiembro.objects.all()
+    serializer_class = SuscripcionesMiembroSerializer
 
-class EquiposViewSet(viewsets.ModelViewSet):
-    queryset = Equipos.objects.all()
-    serializer_class = EquiposSerializer
-
-class HorariosClasesViewSet(viewsets.ModelViewSet):
-    queryset = HorariosClases.objects.all()
-    serializer_class = HorariosClasesSerializer
-
-class HorariosPersonalViewSet(viewsets.ModelViewSet):
-    queryset = HorariosPersonal.objects.all()
-    serializer_class = HorariosPersonalSerializer
-
-class MembresiasViewSet(viewsets.ModelViewSet):
-    queryset = Membresias.objects.all()
-    serializer_class = MembresiasSerializer
-
-class PagosViewSet(viewsets.ModelViewSet):
-    queryset = Pagos.objects.all()
-    serializer_class = PagosSerializer
+class RolesPersonalViewSet(viewsets.ModelViewSet):
+    queryset = RolesPersonal.objects.all()
+    serializer_class = RolesPersonalSerializer
 
 class PersonalViewSet(viewsets.ModelViewSet):
     queryset = Personal.objects.all()
     serializer_class = PersonalSerializer
 
-class ProductosViewSet(viewsets.ModelViewSet):
-    queryset = Productos.objects.all()
-    serializer_class = ProductosSerializer
+class HorariosPersonalViewSet(viewsets.ModelViewSet):
+    queryset = HorariosPersonal.objects.all()
+    serializer_class = HorariosPersonalSerializer
 
-class VentasViewSet(viewsets.ModelViewSet):
-    queryset = Ventas.objects.all()
-    serializer_class = VentasSerializer
+class ClasesViewSet(viewsets.ModelViewSet):
+    queryset = Clases.objects.all()
+    serializer_class = ClasesSerializer
+
+class ClasesProgramadasViewSet(viewsets.ModelViewSet):
+    queryset = ClasesProgramadas.objects.all()
+    serializer_class = ClasesProgramadasSerializer
+
+class AsistenciaViewSet(viewsets.ModelViewSet):
+    queryset = Asistencia.objects.all()
+    serializer_class = AsistenciaSerializer
+
+class PagosViewSet(viewsets.ModelViewSet):
+    queryset = Pagos.objects.all()
+    serializer_class = PagosSerializer
+
+class CategoriasGastoViewSet(viewsets.ModelViewSet):
+    queryset = CategoriasGasto.objects.all()
+    serializer_class = CategoriasGastoSerializer
+
+class GastosViewSet(viewsets.ModelViewSet):
+    queryset = Gastos.objects.all()
+    serializer_class = GastosSerializer
+
+class MetasMiembroViewSet(viewsets.ModelViewSet):
+    queryset = MetasMiembro.objects.all()
+    serializer_class = MetasMiembroSerializer
+
+class LogsEntrenamientoViewSet(viewsets.ModelViewSet):
+    queryset = LogsEntrenamiento.objects.all()
+    serializer_class = LogsEntrenamientoSerializer
+
+class FeedbackMiembroViewSet(viewsets.ModelViewSet):
+    queryset = FeedbackMiembro.objects.all()
+    serializer_class = FeedbackMiembroSerializer
