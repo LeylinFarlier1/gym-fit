@@ -29,8 +29,8 @@ function App() {
 
         <Route path="schedule" element={<SchedulePage />} />
         <Route path="finances" element={<FinancesPage />} />
-        <Route path="staff" element={<StaffPage />} />
-        <Route path="style-guide" element={<StyleGuidePage />} />
+        <Route path="staff" element="<StaffPage />" />
+        <Route path="style-guide" element="<StyleGuidePage />" />
         <Route path="*" element={<h2>Página no encontrada</h2>} />
       </Route>
     </Routes>
