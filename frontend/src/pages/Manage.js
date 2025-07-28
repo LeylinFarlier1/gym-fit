@@ -1,12 +1,17 @@
 import React from 'react';
 import './Manage.css';
-import MemberForm from '../components/MemberForm'; // Importar el formulario
+import MemberForm from '../components/MemberForm';
+import ExpenseForm from '../components/ExpenseForm'; // Importar el formulario de gastos
 
 const Manage = () => {
   const handleMemberAdded = () => {
-    // Logic to handle success, e.g., show a success message or clear the form
     console.log('Nuevo miembro añadido exitosamente!');
-    // You might want to clear the form here
+    // Logic for success after adding member
+  };
+
+  const handleExpenseAdded = () => {
+    console.log('Nuevo gasto registrado exitosamente!');
+    // Logic for success after adding expense
   };
 
   return (
@@ -19,11 +24,11 @@ const Manage = () => {
       <div className="management-actions">
         <div className="action-card">
           <h3>Añadir Nuevo Miembro</h3>
-          <MemberForm onSuccess={handleMemberAdded} /> {/* Integrar el formulario */}
+          <MemberForm onSuccess={handleMemberAdded} />
         </div>
         <div className="action-card">
           <h3>Registrar Gasto</h3>
-          <p>Formulario para registrar un nuevo gasto próximamente...</p>
+          <ExpenseForm onSuccess={handleExpenseAdded} /> {/* Integrar el formulario de gastos */}
         </div>
         <div className="action-card">
           <h3>Crear Plan de Membresía</h3>
