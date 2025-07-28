@@ -42,7 +42,7 @@ Gym Fit es una aplicación web completa para la gestión integral de gimnasios y
 
 1. **Clonar el repositorio**
    ```bash
-   git clone https://github.com/[tu-usuario]/gym-fit.git
+   git clone https://github.com/LeylinFarlier1/gym-fit.git
    cd gym-fit
    ```
 
