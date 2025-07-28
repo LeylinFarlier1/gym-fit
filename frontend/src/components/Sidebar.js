@@ -2,7 +2,7 @@ import React from 'react';
 import './Sidebar.css';
 
 const Sidebar = ({ activeView, setActiveView }) => {
-  const menuItems = ['Dashboard', 'Miembros']; // Añadiremos más aquí en el futuro
+  const menuItems = ['Dashboard', 'Miembros', 'Gestión']; // Añadido nuevo item
 
   return (
     <nav className="sidebar">

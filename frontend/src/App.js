@@ -3,6 +3,7 @@ import './App.css';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Members from './pages/Members';
+import Manage from './pages/Manage'; // Importar la nueva página
 
 const API_BASE_URL = 'http://localhost:8000/api/';
 
@@ -53,6 +54,8 @@ function App() {
     switch (activeView) {
       case 'miembros':
         return <Members data={data} loading={loading} error={error} />;
+      case 'gestión':
+        return <Manage />;
       case 'dashboard':
       default:
         return <Dashboard data={data} loading={loading} error={error} />;
