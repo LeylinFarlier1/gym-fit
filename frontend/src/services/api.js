@@ -1,6 +1,4 @@
-// ARCHIVO: frontend/src/services/api.js
-
-const API_BASE_URL = 'http://localhost:8000/api'; // La URL base de tu API de Django
+const API_BASE_URL = 'http://localhost:8000/api';
 
 /**
  * Función genérica para realizar peticiones a la API.

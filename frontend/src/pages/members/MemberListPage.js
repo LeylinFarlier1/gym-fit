@@ -1,5 +1,3 @@
-// ARCHIVO: frontend/src/pages/members/MemberListPage.js
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DataTable } from '../../components/data/DataTable';
@@ -7,45 +5,65 @@ import { Button } from '../../components/ui/Button';
 import { StatusBadge } from '../../components/ui/StatusBadge';
 import { UserPlus, Edit } from 'lucide-react';
 import './MemberListPage.css';
-import { api } from '../../services/api'; // <-- 1. Importamos nuestro servicio de API
+import { api } from '../../services/api';
 
 const MemberListPage = () => {
   const navigate = useNavigate();
   
-  // --- 2. Creamos estados para manejar los datos, la carga y los errores ---
-  const [members, setMembers] = useState([]); // Para guardar la lista de miembros
-  const [isLoading, setIsLoading] = useState(true); // Para saber si estamos cargando datos
-  const [error, setError] = useState(null); // Para guardar cualquier error de la API
+  const [members, setMembers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // --- 3. Usamos useEffect para llamar a la API cuando el componente se monta ---
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        setIsLoading(true); // Empezamos a cargar
-        setError(null); // Limpiamos errores anteriores
-        const data = await api.members.getAll(); // Llamamos a la API
-        setMembers(data); // Guardamos los datos en el estado
+        setIsLoading(true);
+        setError(null);
+        const data = await api.members.getAll();
+        setMembers(data);
       } catch (err) {
-        setError('No se pudo cargar la lista de miembros. Por favor, intente más tarde.'); // Guardamos el mensaje de error
+        setError('No se pudo cargar la lista de miembros. Por favor, intente más tarde.');
         console.error(err);
       } finally {
-        setIsLoading(false); // Terminamos de cargar (ya sea con éxito o con error)
+        setIsLoading(false);
       }
     };
 
     fetchMembers();
-  }, []); // El array vacío `[]` asegura que esto se ejecute solo una vez
+  }, []);
 
-  // --- 4. Definimos las columnas para la tabla ---
-  // Asegúrate de que los 'key' coincidan con los nombres de los campos en tu serializador de Django
   const columns = [
-    { key: 'first_name', header: 'Nombre' },
-    { key: 'last_name', header: 'Apellido' },
+    { key: 'nombre', header: 'Nombre' }, 
+    { key: 'apellido', header: 'Apellido' },
     { key: 'email', header: 'Email' },
     { 
-      key: 'membership_status', // Asumiendo que tienes un campo así en tu modelo/serializador
+      key: 'fecha_registro', 
+      header: 'Fecha Registro',
+      render: (row) => {
+        return new Date(row.fecha_registro).toLocaleDateString('es-AR', {
+          year: 'numeric', month: 'long', day: 'numeric'
+        });
+      }
+    },
+    { 
+      key: 'estado',
       header: 'Estado',
-      render: (row) => <StatusBadge status={row.membership_status || 'expired'} />
+      render: (row) => {
+        // SOLUCIÓN MEJORADA: Hacemos el mapeo insensible a mayúsculas.
+        const statusMap = {
+          'potencial': 'pending', // Clave en minúscula
+          'activo': 'active',
+          'vencido': 'expired'
+        };
+        
+        const backendStatusText = (row.estado || '').trim();
+        // Convertimos el estado del backend a minúsculas ANTES de buscarlo en el mapa
+        const backendStatusKey = backendStatusText.toLowerCase(); 
+        const frontendStatusClass = statusMap[backendStatusKey] || 'expired';
+
+        // Mostramos el texto original del backend, pero usamos la clase CSS correcta
+        return <StatusBadge status={frontendStatusClass} label={backendStatusText} />;
+      }
     },
     { 
       key: 'actions', 
@@ -58,14 +76,30 @@ const MemberListPage = () => {
     }
   ];
 
-  // --- 5. Renderizamos condicionalmente según el estado de carga o error ---
   if (isLoading) {
     return <div>Cargando miembros...</div>;
   }
 
   if (error) {
-    return <div className="error-message">{error}</div>;
+    return <div className="error-message" style={{color: 'red'}}>{error}</div>;
   }
+  
+  // Para que la solución funcione, el componente StatusBadge.js debe ser flexible.
+  // Aquí está el código recomendado para `src/components/ui/StatusBadge.js`:
+  /*
+  import React from 'react';
+  import './StatusBadge.css';
+
+  export const StatusBadge = ({ status, label }) => {
+    // El 'status' que se recibe aquí es la clase CSS (ej. 'pending')
+    // El 'label' es el texto a mostrar (ej. 'Potencial')
+    return (
+      <span className={`status-badge status-${status}`}>
+        {label}
+      </span>
+    );
+  };
+  */
 
   return (
     <div className="member-list-page">
@@ -77,7 +111,7 @@ const MemberListPage = () => {
       </div>
       <DataTable 
         columns={columns} 
-        data={members} // Usamos los datos del estado, no los de ejemplo
+        data={members}
         onRowClick={(row) => navigate(`/members/${row.id}`)}
       />
     </div>
@@ -85,3 +119,4 @@ const MemberListPage = () => {
 };
 
 export default MemberListPage;
+

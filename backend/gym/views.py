@@ -5,7 +5,7 @@ from .models import (
     CategoriasGasto, Gastos, MetasMiembro, LogsEntrenamiento, FeedbackMiembro
 )
 from .serializers import (
-    PlanesMembresiaSerializer, MiembrosSerializer, SuscripcionesMiembroSerializer,
+    PlanesMembresiaSerializer, MiembroSerializer, SuscripcionesMiembroSerializer,
     RolesPersonalSerializer, PersonalSerializer, HorariosPersonalSerializer,
     ClasesSerializer, ClasesProgramadasSerializer, AsistenciaSerializer,
     PagosSerializer, CategoriasGastoSerializer, GastosSerializer,
@@ -18,7 +18,7 @@ class PlanesMembresiaViewSet(viewsets.ModelViewSet):
 
 class MiembrosViewSet(viewsets.ModelViewSet):
     queryset = Miembros.objects.all()
-    serializer_class = MiembrosSerializer
+    serializer_class = MiembroSerializer
 
 class SuscripcionesMiembroViewSet(viewsets.ModelViewSet):
     queryset = SuscripcionesMiembro.objects.all()

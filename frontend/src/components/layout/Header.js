@@ -10,10 +10,10 @@ export const Header = () => {
         <input type="text" placeholder="Búsqueda global..." />
       </div>
       <div className="header-actions">
-        <button className="action-btn">
+        <button className="action-btn" aria-label="Notificaciones"> {/* Added aria-label */}
           <Bell size={20} />
         </button>
-        <button className="action-btn">
+        <button className="action-btn" aria-label="Perfil de usuario"> {/* Added aria-label */}
           <User size={20} />
         </button>
       </div>

@@ -8,6 +8,12 @@ import os
 # Debug
 DEBUG = True
 
+# Override SECRET_KEY for local development
+SECRET_KEY = 'django-insecure-8^1acbp&@z-u9-&^r_%!8h2qd7)-^07$y^+wgr_+y$1-n!3)38'
+
+# Ensure ALLOWED_HOSTS is set
+ALLOWED_HOSTS = ['*']
+
 # Database configuration for Docker
 DATABASES = {
     'default': {
@@ -15,7 +21,7 @@ DATABASES = {
         'NAME': os.environ.get('POSTGRES_DB', 'gymfit_db'),
         'USER': os.environ.get('POSTGRES_USER', 'gymadmin'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'gympassword'),
-        'HOST': os.environ.get('DB_HOST', 'db'),
+        'HOST': os.environ.get('SQL_HOST', 'db'),
         'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
