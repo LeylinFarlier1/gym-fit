@@ -1,0 +1,96 @@
+/* frontend/src/components/MemberForm.css */
+
+.member-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.member-form h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: var(--brand-primary);
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--ui-border);
+  border-radius: 6px;
+  background-color: var(--ui-surface);
+  color: var(--text-primary);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="date"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--brand-secondary);
+  box-shadow: 0 0 0 2px rgba(82, 130, 114, 0.2);
+}
+
+.form-group textarea {
+  min-height: 80px;
+  resize: vertical; /* Allow vertical resizing */
+}
+
+.member-form button[type="submit"] {
+  display: inline-block;
+  background-color: var(--action-primary);
+  color: var(--ui-surface);
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  margin-top: 1rem;
+}
+
+.member-form button[type="submit"]:hover {
+  background-color: #ff6347; /* Slightly darker coral */
+}
+
+.success-message {
+  padding: 1rem;
+  background-color: var(--feedback-success);
+  color: white;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+.error-message {
+  padding: 1rem;
+  background-color: var(--feedback-error);
+  color: white;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
