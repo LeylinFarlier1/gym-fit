@@ -1,0 +1,28 @@
+.kpi-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+.kpi-header h3 {
+  margin: 0;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.kpi-icon {
+  color: var(--text-secondary);
+}
+.kpi-value {
+  font-family: var(--font-family-headings);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+.kpi-trend {
+  font-size: var(--font-size-sm);
+}
+.kpi-trend.success { color: var(--feedback-success); }
+.kpi-trend.warning { color: var(--feedback-warning); }
+.kpi-trend.error { color: var(--feedback-error); }

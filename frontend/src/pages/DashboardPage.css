@@ -1,0 +1,11 @@
+.kpi-grid, .quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--spacing-lg);
+}
+.page-section {
+  margin-top: var(--spacing-xl);
+}
+.page-section h2 {
+  margin-bottom: var(--spacing-md);
+}

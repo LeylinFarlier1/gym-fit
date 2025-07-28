@@ -1,75 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import Sidebar from './components/Sidebar';
-import Dashboard from './pages/Dashboard';
-import Members from './pages/Members';
-import Manage from './pages/Manage'; // Importar la nueva página
-
-const API_BASE_URL = 'http://localhost:8000/api/';
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { Layout } from './components/layout/Layout';
+import DashboardPage from './pages/DashboardPage';
+import MembersPage from './pages/MembersPage';
+import MemberListPage from './pages/members/MemberListPage';
+import MemberFormPage from './pages/members/MemberFormPage';
+import MemberDetailPage from './pages/members/MemberDetailPage';
+import SchedulePage from './pages/SchedulePage';
+import FinancesPage from './pages/FinancesPage';
+import StaffPage from './pages/StaffPage';
+import StyleGuidePage from './pages/StyleGuidePage';
 
 function App() {
-  const [activeView, setActiveView] = useState('dashboard');
-  const [data, setData] = useState({
-    pagos: [],
-    miembros: [],
-    clasesProgramadas: [],
-    asistencia: [],
-  });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const endpoints = [
-      'pagos/',
-      'miembros/',
-      'clases-programadas/',
-      'asistencia/'
-    ];
-
-    const fetchData = async () => {
-      try {
-        const responses = await Promise.all(
-          endpoints.map(endpoint =>
-            fetch(`${API_BASE_URL}${endpoint}`).then(res => {
-              if (!res.ok) {
-                throw new Error(`Failed to fetch ${endpoint}`);
-              }
-              return res.json();
-            })
-          )
-        );
-        const [pagos, miembros, clasesProgramadas, asistencia] = responses;
-        setData({ pagos, miembros, clasesProgramadas, asistencia });
-        setLoading(false);
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const renderActiveView = () => {
-    switch (activeView) {
-      case 'miembros':
-        return <Members data={data} loading={loading} error={error} />;
-      case 'gestión':
-        return <Manage />;
-      case 'dashboard':
-      default:
-        return <Dashboard data={data} loading={loading} error={error} />;
-    }
-  };
-
   return (
-    <div className="App">
-      <Sidebar activeView={activeView} setActiveView={setActiveView} />
-      <div className="app-content">
-        {renderActiveView()}
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Navigate to="/dashboard" replace />} />
+        
+        <Route path="dashboard" element={<DashboardPage />} />
+        
+        {/* Nested routes for members module */}
+        <Route path="members" element={<MembersPage />}>
+          <Route index element={<MemberListPage />} />
+          <Route path="new" element={<MemberFormPage />} />
+          <Route path=":id" element={<MemberDetailPage />} />
+          <Route path=":id/edit" element={<MemberFormPage />} />
+        </Route>
+
+        <Route path="schedule" element={<SchedulePage />} />
+        <Route path="finances" element={<FinancesPage />} />
+        <Route path="staff" element={<StaffPage />} />
+        <Route path="style-guide" element={<StyleGuidePage />} />
+        <Route path="*" element={<h2>Página no encontrada</h2>} />
+      </Route>
+    </Routes>
   );
 }
-
 export default App;
