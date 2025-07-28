@@ -10,7 +10,7 @@ from .views import (
 
 router = DefaultRouter()
 router.register(r'planes-membresia', PlanesMembresiaViewSet)
-router.register(r'miembros', MiembrosViewSet)
+router.register(r'members', MiembrosViewSet) # Register MiembrosViewSet
 router.register(r'suscripciones-miembro', SuscripcionesMiembroViewSet)
 router.register(r'roles-personal', RolesPersonalViewSet)
 router.register(r'personal', PersonalViewSet)
